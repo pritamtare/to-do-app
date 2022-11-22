@@ -1,0 +1,14 @@
+
+
+.CompletedBtn{width:160px !important; background-color: #009500 !important; }
+.PendingBtn{width:160px !important; background-color: #ecb40c !important; cursor:disabled !important;}
+
+
+.deleteTask{
+    background-color: rgb(195, 65, 65) !important;
+}
+
+.noRecords{
+    text-align: center;
+    font-size: 22px;
+}
