@@ -9,10 +9,10 @@
 
       2. npm install
 
-1. Open two different command propmts.
+1. Open two different command prompts.
 
 
-2. Run the following command on first command propmt to start react application:
+2. Run the following command on first command prompt to start react application:
    
       npm start
 
@@ -22,7 +22,7 @@
       http://localhost:3000
 
 
-4. Run the following command on second command propmt to start json server:
+4. Run the following command on second command prompt to start json server:
 
       npm run json-server
 
