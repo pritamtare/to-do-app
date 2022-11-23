@@ -81,13 +81,18 @@ const Home = () => {
 
   const getData = async () => {
     const data = await axios.get("http://localhost:3009/tasks");
-    setFetchedData(data.data);
-    setFilterData(data.data);
+    if(data.status===200){
+      setFetchedData(data.data);
+      setFilterData(data.data);
+    }
+
   };
 
   const deleteTask = async (task) => {
-    await axios.delete("http://localhost:3009/tasks/" + task.id);
-    getData();
+    let data=await axios.delete("http://localhost:3009/tasks/" + task.id);
+    if(data.status===200){
+      getData();
+    }
   };
 
   const onFocus = () => {
