@@ -1,4 +1,4 @@
-import Home from './cpmponents/home/home';
+import Home from './components/home/home';
 
 function App() {
   return (

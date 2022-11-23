@@ -1,0 +1,29 @@
+.CompletedBtn {
+    width: 160px !important;
+    background-color: #32da32 !important;
+    cursor: not-allowed !important;
+}
+
+.PendingBtn {
+    width: 160px !important;
+    background-color: #e8b008 !important;
+}
+
+.PendingBtn:hover {
+    background-color: #9b7605 !important;
+}
+
+
+.deleteTask {
+    background-color: rgb(195, 65, 65) !important;
+}
+
+
+.deleteTask:hover {
+    background-color: rgb(142, 40, 40) !important;
+}
+
+.noRecords {
+    text-align: center;
+    font-size: 22px;
+}

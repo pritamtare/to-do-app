@@ -4,36 +4,35 @@ import Table from "react-bootstrap/Table";
 import { Button } from "react-bootstrap";
 import "./home.css";
 import Header from "../header/header";
-import ModalComp from "../modal/modal";
-
+import DropDown from "../dropdown/dropdown";
 const Home = () => {
   const [fetchedData, setFetchedData] = useState([]);
+  const [filterData, setFilterData] = useState([]);
   const [addTask, setAddTask] = useState("");
-  const [blankDataValidate, setBlankDataValidate] = useState(false)
+  const [blankDataValidate, setBlankDataValidate] = useState(false);
 
   useEffect(() => {
     getData();
   }, []);
 
-
-
   const tableData = fetchedData?.map((task, index) => {
     return (
       <tr key={task.id}>
-        <td className="col-1">{index + 1}</td>
-        <td className="col-6">{task.title}</td>
-        <td className="col-3">
+        <td className="col-1  text-center">{index + 1}</td>
+        <td className="col-5">{task.title}</td>
+        <td className="col-3 text-center">
           <Button
-            // className="statusBtn"
-            className= { task.status === "C" ? "CompletedBtn" : "PendingBtn"} 
+            className={task.status === "C" ? "CompletedBtn" : "PendingBtn"}
             onClick={() => handleMArkComplete(task)}
             disabled={task.status === "C"}
           >
             {task.status === "C" ? "Completed" : "Pending"}
           </Button>
         </td>
-        <td className="col-3">
-          <Button className="deleteTask" onClick={()=>deleteTask(task)}>Delete</Button>
+        <td className="col-3  text-center" >
+          <Button className="deleteTask" onClick={() => deleteTask(task)}>
+            Delete
+          </Button>
         </td>
       </tr>
     );
@@ -51,9 +50,9 @@ const Home = () => {
       status: "P",
     };
 
-    if(addTask === ""){
-      setBlankDataValidate(true)
-        return false;
+    if (addTask === "") {
+      setBlankDataValidate(true);
+      return false;
     }
     let response = await axios.post("http://localhost:3009/tasks", {
       ...tasks,
@@ -81,21 +80,30 @@ const Home = () => {
   };
 
   const getData = async () => {
-    // if(fetchedData.status==="C"){
-    // setIsDisabled(false)
-    // }
     const data = await axios.get("http://localhost:3009/tasks");
     setFetchedData(data.data);
+    setFilterData(data.data);
   };
 
   const deleteTask = async (task) => {
-        await axios.delete("http://localhost:3009/tasks/" + task.id)
-        getData();
-  }
+    await axios.delete("http://localhost:3009/tasks/" + task.id);
+    getData();
+  };
 
-  const onFocus = () =>{
+  const onFocus = () => {
     setBlankDataValidate(false);
-  }
+  };
+
+  const handleSelect = (eventKey) => {
+    if (eventKey === "A") {
+      getData();
+    } else {
+      const data = filterData.filter((e) => {
+        return e.status === eventKey;
+      });
+      setFetchedData(data);
+    }
+  };
 
   return (
     <div>
@@ -109,22 +117,33 @@ const Home = () => {
         onFocus={onFocus}
       />
 
-      <div className="py-5">
+      <div className="container">
+        <DropDown handleSelect={handleSelect} className="float-right" />
+      </div>
+
+      <div className="pt-3">
         <Table striped bordered className="container">
           <thead className="bg-dark text-light">
             <tr>
-              <th className="col-1">SR. No.</th>
-              <th className="col-6">Task Title</th>
-              <th className="col-3">Task Status</th>
-              <th className="col-3">Delete Task</th>
+              <th className="col-1 text-center">Sr. No.</th>
+              <th className="col-5">Task Title</th>
+              <th className="col-3  text-center">Task Status</th>
+              <th className="col-3  text-center">Delete Task</th>
             </tr>
           </thead>
 
           <tbody>
-            
-            {  fetchedData.length === 0 ? <tr><td></td><td   className="noRecords">No Taks Found </td> <td></td><td></td></tr> :  tableData }
-            
+            {fetchedData.length === 0 ? (
+              <tr>
+                <td></td>
+                <td className="noRecords">No Taks Found </td> <td></td>
+                <td></td>
+              </tr>
+            ) : (
+              tableData
+            )}
           </tbody>
+          
         </Table>
       </div>
     </div>
